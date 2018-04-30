@@ -44,10 +44,8 @@ int main()
 
     // Second vecteur
     vector<string> VecteurDeString;
-    cout << "" << VecteurDeString.size() << endl;
-    baliser(100);
+
     VecteurDeString.push_back("Allo");
-    cout << "" << VecteurDeString.size() << endl;
 
     assert(VecteurDeString.size() == 1);
     baliser(7);

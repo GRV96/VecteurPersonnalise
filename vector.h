@@ -11,19 +11,32 @@ private:
     unsigned int nbElements;
 
     // Taille d'une case du tableau
-    //unsigned int tailleCase;
+    //unsigned int tailleElement;
 
     // Collection contenant les éléments
-    T *collection;
+    T** collection;
+
+    void copierTableau(T** source, T** destination, unsigned int nbCopies)
+    {
+        for(int i(0); i<nbCopies; i++)
+        {
+            destination[i] = source[i];
+        }
+    }
 
     /**
-    *   \brief Si la collection n'est pas nulle, elle est supprimée.
+    *   \brief Si la collection n'est pas vide, elle est supprimée.
     */
     void supprimerCollection()
     {
-        if(collection != NULL)
+        if(!this->empty())
         {
-            free(collection);
+            for(int i(0); i<nbElements; i++)
+            {
+                delete collection[i];
+                //collection[i] = nullptr;
+            }
+            delete [] collection;
             nbElements = 0;
         }
     }
@@ -34,8 +47,8 @@ public:
     */
     vector<T>()
     {
-        collection = NULL;
-        //tailleCase = sizeof(T);
+        collection = new T*[1];
+        //tailleElement = sizeof(T);
         nbElements = 0;
     }
 
@@ -51,43 +64,43 @@ public:
     *   \brief Renvoie un pointeur vers l'élément à la position donnée.
     *   \param i
     *       Position de l'élément demandé
-    *   \return éléent à la position i
+    *   \return
+    *       Élément à la position i
     */
-    T at(unsigned int i) const {return collection[i];}
+    T at(unsigned int i) const {return *collection[i];}
 
     /**
-    *   \brief Supprime les éléments en réinitialisant la collection du le vecteur.
+    *   \brief Supprime les éléments en réinitialisant la collection du vecteur.
     */
     void clear() {supprimerCollection();}
 
     /**
-    *    \brief Indique si le vecteur est vide.
-    *    \return vrai si aucun élément n'est contenu
+    *    \brief
+    *       Indique si le vecteur est vide.
+    *    \return
+    *       Vrai si aucun élément n'est contenu
     */
     bool empty() const {return nbElements == 0;}
 
     /**
     *   \brief
     *       Supprime le dernier élément de la collection.
-    *   \return
-    *       Vrai si la suppression est effectuée correctement
-    *       ou faux en cas d'échec ou si la collection est déjà vide.
     */
-    bool pop_back()
+    void pop_back()
     {
-        if(!this->empty())
+        if(nbElements > 1)
         {
-            T* temporaire = (T*)realloc(collection, (nbElements-1)*sizeof(T));
-
-            if(temporaire != NULL)
-            {
-                collection = temporaire;
-                nbElements--;
-                return true;
-            }
+            T** temporaire = new T*[nbElements-1];
+            copierTableau(collection, temporaire, nbElements-1);
+            delete [] collection;
+            collection = temporaire;
+            nbElements--;
         }
-
-        return false;
+        else if(nbElements == 1)
+        {
+            delete [] collection;
+            nbElements--;
+        }
     }
 
     /**
@@ -95,22 +108,28 @@ public:
     *       Ajoute un élément à la fin de la collection.
     *   \param nouveau
     *       Élément ajouté à la collection
-    *   \return
-    *       Vrai si l'ajout est effectué correctement ou faux en cas d'échec.
     */
-    bool push_back(T nouveau)
+    void push_back(T nouveau)
     {
-        T* temporaire = (T*)realloc(collection, (nbElements+1)*sizeof(T));
+        T* ptrTemporaire = new T;
+        *ptrTemporaire = nouveau;
+        push_back(ptrTemporaire);
+    }
 
-        if(temporaire != NULL)
-        {
-            collection = temporaire;
-            collection[nbElements] = nouveau;
-            nbElements++;
-            return true;
-        }
-
-        return false;
+    /**
+    *   \brief
+    *       Ajoute un élément à la fin de la collection.
+    *   \param nouveau
+    *       Pointeur de l'élément ajouté à la fin de la collection
+    */
+    void push_back(T* nouveau)
+    {
+        T** temporaire = new T*[nbElements+1];
+        copierTableau(collection, temporaire, nbElements);
+        temporaire[nbElements] = nouveau;
+        delete [] collection;
+        collection = temporaire;
+        nbElements++;
     }
 
     /**
@@ -127,7 +146,7 @@ public:
     */
     T operator[](unsigned int i)
     {
-        return collection[i];
+        return *collection[i];
     }
 };
 
