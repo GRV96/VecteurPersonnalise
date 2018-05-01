@@ -10,9 +10,6 @@ private:
     // Nombre d'éléments contenus
     unsigned int nbElements;
 
-    // Taille d'une case du tableau
-    //unsigned int tailleElement;
-
     // Collection contenant les éléments
     T** collection;
 
@@ -48,7 +45,6 @@ public:
     vector<T>()
     {
         collection = new T*[1];
-        //tailleElement = sizeof(T);
         nbElements = 0;
     }
 
