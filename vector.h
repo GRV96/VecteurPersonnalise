@@ -87,10 +87,20 @@ public:
         if(nbElements > 1)
         {
             T** temporaire = new T*[nbElements-1];
+
+            // Les pointeurs contenus dans temporaire sont copiés case par case sauf le dernier.
             copierTableau(collection, temporaire, nbElements-1);
+
+            // Efface le contenu des cases de collection. Elles sont désallouées.
             delete [] collection;
+
+            // Collection pointe le même espace mémoire que temporaire.
             collection = temporaire;
+
+            // Décrémentation du nombre d'éléments
             nbElements--;
+
+            // Temporaire est dans la pile. À la fin de la méthode, il n'existe plus.
         }
         else if(nbElements == 1)
         {
@@ -121,11 +131,23 @@ public:
     void push_back(T* nouveau)
     {
         T** temporaire = new T*[nbElements+1];
+
+        // Les pointeurs contenus dans temporaire sont copiés case par case.
         copierTableau(collection, temporaire, nbElements);
+
+        // Le nouvel élément est ajouté à la fin de temporaire.
         temporaire[nbElements] = nouveau;
+
+        // Efface le contenu des cases de collection. Elles sont désallouées.
         delete [] collection;
+
+        // Collection pointe le même espace mémoire que temporaire.
         collection = temporaire;
+
+        // Incrémentaion du nombre d'éléments.
         nbElements++;
+
+        // Temporaire est dans la pile. À la fin de la méthode, il n'existe plus.
     }
 
     /**
