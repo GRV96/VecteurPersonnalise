@@ -64,8 +64,9 @@ int main()
     assert(VecteurDeString.size() == 6);
     baliser(10);
 
+    //* Test de l'itérateurs avec "begin()" et "end()"
     int compteur = 0;
-    /* Test pour les itérateurs avec "begin()" et "end()"
+
     for(vector<string>::iterator it = VecteurDeString.begin(); it != VecteurDeString.end(); ++it)
     {
         compteur++;

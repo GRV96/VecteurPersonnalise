@@ -2,6 +2,7 @@
 #define VECTOR_H_INCLUDED
 
 #include <cstdlib>
+#include <iterator>
 
 template <typename T>
 class vector
@@ -156,6 +157,10 @@ public:
     */
     unsigned int size() const {return nbElements;}
 
+    iterator begin() const {return iterator(collection);}
+
+    iterator end() const {return iterator(collection + nbElements);}
+
     /**
     *   \brief Donne accès à l'élément à la position spécifiée.
     *   \param i
@@ -166,6 +171,33 @@ public:
     {
         return *collection[i];
     }
+
+    class iterator
+    {
+    private:
+        T* pointeur;
+
+    public:
+        /**
+        *   \brief Constructeur
+        */
+        iterator(T** ptr) pointeur(ptr){}
+
+        /**
+        *   \brief Destructeur
+        */
+        ~iterator() {pointeur = 0;}
+
+        void operator++() {pointeur++;}
+
+        void operator--() {pointeur--;}
+
+        bool operator==(iterator i) const {return pointeur == i.pointeur;}
+
+        bool operator!=(iterator i) const {return pointeur != i.pointeur;}
+
+        T operator*(iterator i) const {return *pointeur;}
+    };
 };
 
 #endif // VECTOR_H_INCLUDED
