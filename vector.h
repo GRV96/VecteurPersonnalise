@@ -32,9 +32,9 @@ private:
             for(int i(0); i<nbElements; i++)
             {
                 delete collection[i];
-                //collection[i] = nullptr;
             }
             delete [] collection;
+            collection = 0;
             nbElements = 0;
         }
     }
@@ -157,9 +157,9 @@ public:
     */
     unsigned int size() const {return nbElements;}
 
-    iterator begin() const {return iterator(collection);}
+    //iterator begin() const {return iterator(collection);}
 
-    iterator end() const {return iterator(collection + nbElements);}
+    //iterator end() const {return iterator(collection + nbElements);}
 
     /**
     *   \brief Donne accès à l'élément à la position spécifiée.
@@ -181,12 +181,16 @@ public:
         /**
         *   \brief Constructeur
         */
-        iterator(T** ptr) pointeur(ptr){}
+        iterator(T** ptr): pointeur(ptr){}
 
         /**
         *   \brief Destructeur
         */
-        ~iterator() {pointeur = 0;}
+        ~iterator()
+        {
+            delete pointeur;
+            pointeur = 0;
+        }
 
         void operator++() {pointeur++;}
 

@@ -42,18 +42,33 @@ int main()
     assert(VecteurDeInts.size() == 0);
     baliser(6);
 
+    VecteurDeInts.push_back(1);
+    VecteurDeInts.push_back(2);
+    VecteurDeInts.push_back(3);
+    VecteurDeInts.push_back(4);
+    VecteurDeInts.push_back(5);
+    VecteurDeInts.push_back(6);
+
+    for(int i(0); i<VecteurDeInts.size(); i++)
+    {
+        cout << "" << VecteurDeInts.at(i) << endl;
+    }
+
+    assert(VecteurDeInts.size() == 6);
+    baliser(7);
+
     // Second vecteur
     vector<string> VecteurDeString;
 
     VecteurDeString.push_back("Allo");
 
     assert(VecteurDeString.size() == 1);
-    baliser(7);
+    baliser(8);
 
     assert(VecteurDeString[0] != "A110");
-    baliser(8);
-    assert(VecteurDeString[0] == "Allo");
     baliser(9);
+    assert(VecteurDeString[0] == "Allo");
+    baliser(10);
 
     VecteurDeString.push_back("Bob");
     VecteurDeString.push_back("Chat");
@@ -62,9 +77,9 @@ int main()
     VecteurDeString.push_back("Flash");
 
     assert(VecteurDeString.size() == 6);
-    baliser(10);
+    baliser(11);
 
-    //* Test de l'itérateurs avec "begin()" et "end()"
+    /* Test de l'itérateurs avec "begin()" et "end()"
     int compteur = 0;
 
     for(vector<string>::iterator it = VecteurDeString.begin(); it != VecteurDeString.end(); ++it)
