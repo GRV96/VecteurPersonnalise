@@ -40,6 +40,41 @@ private:
     }
 
 public:
+
+    class iterator
+    {
+    private:
+        T** pointeur;
+
+    public:
+        /**
+        *   \brief Constructeur
+        */
+        iterator(T** ptr)
+        {
+            pointeur = ptr;
+        }
+
+        /**
+        *   \brief Destructeur
+        */
+        ~iterator()
+        {
+            pointeur = 0;
+        }
+
+        void operator++() {pointeur++;}
+
+        void operator--() {pointeur--;}
+
+        bool operator==(iterator i) const {return pointeur == i.pointeur;}
+
+        bool operator!=(iterator i) const {return pointeur != i.pointeur;}
+
+        // Sans l'esperluette (&), il est impossible de modifier l'élément dans la collection.
+        T& operator*() const {return **pointeur;}
+    };
+
     /**
     *   \brief Constructeur
     */
@@ -157,9 +192,9 @@ public:
     */
     unsigned int size() const {return nbElements;}
 
-    //iterator begin() const {return iterator(collection);}
+    iterator begin() const {return iterator(collection);}
 
-    //iterator end() const {return iterator(collection + nbElements);}
+    iterator end() const {return iterator(collection + nbElements);}
 
     /**
     *   \brief Donne accès à l'élément à la position spécifiée.
@@ -171,37 +206,6 @@ public:
     {
         return *collection[i];
     }
-
-    class iterator
-    {
-    private:
-        T* pointeur;
-
-    public:
-        /**
-        *   \brief Constructeur
-        */
-        iterator(T** ptr): pointeur(ptr){}
-
-        /**
-        *   \brief Destructeur
-        */
-        ~iterator()
-        {
-            delete pointeur;
-            pointeur = 0;
-        }
-
-        void operator++() {pointeur++;}
-
-        void operator--() {pointeur--;}
-
-        bool operator==(iterator i) const {return pointeur == i.pointeur;}
-
-        bool operator!=(iterator i) const {return pointeur != i.pointeur;}
-
-        T operator*(iterator i) const {return *pointeur;}
-    };
 };
 
 #endif // VECTOR_H_INCLUDED

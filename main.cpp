@@ -49,7 +49,7 @@ int main()
     VecteurDeInts.push_back(5);
     VecteurDeInts.push_back(6);
 
-    for(int i(0); i<VecteurDeInts.size(); i++)
+    for(unsigned int i(0); i<VecteurDeInts.size(); i++)
     {
         cout << "" << VecteurDeInts.at(i) << endl;
     }
@@ -79,12 +79,20 @@ int main()
     assert(VecteurDeString.size() == 6);
     baliser(11);
 
-    /* Test de l'itérateurs avec "begin()" et "end()"
+    //* Test de l'itérateurs avec "begin()" et "end()"
     int compteur = 0;
 
     for(vector<string>::iterator it = VecteurDeString.begin(); it != VecteurDeString.end(); ++it)
     {
+        string chaine = *it;
+
+        cout << "Chaine " << compteur << ": " << chaine << ", taille: " << chaine.size() << endl;
         compteur++;
+
+        if(compteur == 3)
+        {
+            *it = "Alexandre";
+        }
     }
 
     assert(compteur == 6);
