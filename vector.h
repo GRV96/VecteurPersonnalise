@@ -22,6 +22,25 @@ private:
         }
     }
 
+    void eliminerCasesVides(unsigned int vides)
+    {
+        T** temporaire = new T*[nbElements-vides];
+        T* elementActuel = NULL;
+
+        for(unsigned int i=0; i<nbElements; i++)
+        {
+            elementActuel = collection[i];
+            if(elementActuel != NULL)
+            {
+                temporaire[i] = elementActuel;
+            }
+        }
+
+        nbElements -= vides;
+        collection = new T*[nbElements];
+        copierTableau(temporaire, collection, nbElements);
+    }
+
     /**
     *   \brief Si la collection n'est pas vide, elle est supprimée.
     */
@@ -44,11 +63,19 @@ public:
     class iterator
     {
     private:
+
+        // Pointeur de pointeurs contenant la collection du vecteur
         T** pointeur;
 
+        // Indice pour parcourir la collection
+        unsigned int indice;
+
     public:
+
         /**
         *   \brief Constructeur
+        *   \param ptr
+        *       Pointeur de pointeurs qui sert de collection
         */
         iterator(T** ptr)
         {
@@ -63,16 +90,46 @@ public:
             pointeur = 0;
         }
 
-        void operator++() {pointeur++;}
+        /**
+        *   \brief
+        *       Accède à l'indice du pointeur actuel.
+        *   \return
+        *       L'indice actuel
+        */
+        unsigned int position() const {return indice;}
 
-        void operator--() {pointeur--;}
+        iterator operator+(int p) //{pointeur += p;}
+        {
+            iterator i(pointeur);
+            //i.pointeur += p;
+            i.indice = indice + p;
+            return i;
+        }
 
-        bool operator==(iterator i) const {return pointeur == i.pointeur;}
+        void operator++() {indice++;}
 
-        bool operator!=(iterator i) const {return pointeur != i.pointeur;}
+        iterator operator-(int m) //{pointeur -= m;}
+        {
+            iterator i(pointeur);
+            //i.pointeur -= m;
+            i.indice = indice - m;
+            return i;
+        }
+
+        void operator--() {indice--;}
+
+        bool operator==(iterator i) const {return pointeur==i.pointeur && indice == i.indice;}
+
+        bool operator!=(iterator i) const {return pointeur!=i.pointeur || indice!=i.indice;}
+
+        bool operator<(iterator i) const {return indice < i.indice;}
+        bool operator<=(iterator i) const {return (*this)<i || (*this)==i;}
+
+        bool operator>(iterator i) const {return indice > i.indice;}
+        bool operator>=(iterator i) const {return (*this)>i || (*this)==i;}
 
         // Sans l'esperluette (&), il est impossible de modifier l'élément dans la collection.
-        T& operator*() const {return **pointeur;}
+        T& operator*() const {return *pointeur[indice];}
     };
 
     /**
@@ -105,6 +162,27 @@ public:
     *   \brief Supprime les éléments en réinitialisant la collection du vecteur.
     */
     void clear() {supprimerCollection();}
+
+    void erase(iterator position)
+    {
+        erase(position, position+1);
+    }
+
+    void erase(iterator premier, iterator dernier)
+    {
+        unsigned int position;
+        unsigned int suppressions = 0;
+
+        for(premier; premier<dernier; premier++)
+        {
+            position = premier.position();
+            delete collection[position];
+            collection[position] = 0;
+            suppressions++;
+        }
+
+        eliminerCasesVides(suppressions);
+    }
 
     /**
     *    \brief
@@ -192,8 +270,16 @@ public:
     */
     unsigned int size() const {return nbElements;}
 
+    /**
+    *   \brief Crée un itérateur pointant le premier élément de la collection.
+    *   \return un itérateur pointant le premier élément
+    */
     iterator begin() const {return iterator(collection);}
 
+    /**
+    *   \brief Crée un itérateur pointant le dernier élément de la collection.
+    *   \return un itérateur pointant le dernier élément
+    */
     iterator end() const {return iterator(collection + nbElements);}
 
     /**
