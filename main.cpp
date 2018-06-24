@@ -57,6 +57,17 @@ int main()
     assert(VecteurDeInts.size() == 6);
     baliser(7);
 
+    /*
+    cout << "Essai de erase() avec deux iterateurs." << endl;
+
+    VecteurDeInts.erase(VecteurDeInts.begin()+2, VecteurDeInts.end()-1);
+
+    for(int i(0); i<VecteurDeInts.size(); i++)
+    {
+        cout << "" << VecteurDeInts[i] << endl;
+    }
+    //*/
+
     // Second vecteur
     vector<string> VecteurDeString;
 
@@ -93,9 +104,13 @@ int main()
         {
             *it = "Alexandre";
         }
+        baliser(100+compteur);
     }
 
-    assert(compteur == 6);
+    cout << "Compteur: " << compteur << endl;
+
+    //assert(compteur == 6);
+    baliser(12);
     //*/
 
     for(int i(0); i<VecteurDeString.size(); i++)

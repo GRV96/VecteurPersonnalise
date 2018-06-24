@@ -8,6 +8,7 @@ template <typename T>
 class vector
 {
 private:
+
     // Nombre d'éléments contenus
     unsigned int nbElements;
 
@@ -26,13 +27,15 @@ private:
     {
         T** temporaire = new T*[nbElements-vides];
         T* elementActuel = NULL;
+        unsigned int posTemporaire = 0;
 
         for(unsigned int i=0; i<nbElements; i++)
         {
             elementActuel = collection[i];
             if(elementActuel != NULL)
             {
-                temporaire[i] = elementActuel;
+                temporaire[posTemporaire] = elementActuel;
+                posTemporaire++;
             }
         }
 
@@ -68,7 +71,7 @@ public:
         T** pointeur;
 
         // Indice pour parcourir la collection
-        unsigned int indice;
+        unsigned int indice = 0;
 
     public:
 
@@ -98,20 +101,18 @@ public:
         */
         unsigned int position() const {return indice;}
 
-        iterator operator+(int p) //{pointeur += p;}
+        iterator operator+(int p) const
         {
             iterator i(pointeur);
-            //i.pointeur += p;
             i.indice = indice + p;
             return i;
         }
 
         void operator++() {indice++;}
 
-        iterator operator-(int m) //{pointeur -= m;}
+        iterator operator-(int m) const
         {
             iterator i(pointeur);
-            //i.pointeur -= m;
             i.indice = indice - m;
             return i;
         }
@@ -173,7 +174,7 @@ public:
         unsigned int position;
         unsigned int suppressions = 0;
 
-        for(premier; premier<dernier; premier++)
+        for(premier; premier<dernier; ++premier)
         {
             position = premier.position();
             delete collection[position];
