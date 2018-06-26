@@ -4,7 +4,6 @@
 //#include <vector>
 
 #include "vector.h"
-//#include "9 mai/vector.h"
 
 using namespace std;
 
