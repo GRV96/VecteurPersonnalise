@@ -8,7 +8,6 @@ template <typename T>
 class vector
 {
 private:
-
     // Nombre d'éléments contenus
     unsigned int nbElements;
 
@@ -151,7 +150,7 @@ public:
     }
 
     /**
-    *   \brief Renvoie un pointeur vers l'élément à la position donnée.
+    *   \brief Renvoie l'élément à la position donnée.
     *   \param i
     *       Position de l'élément demandé
     *   \return
@@ -160,9 +159,21 @@ public:
     T at(unsigned int i) const {return *collection[i];}
 
     /**
+    *   \brief Crée un itérateur pointant le premier élément de la collection.
+    *   \return un itérateur pointant le premier élément
+    */
+    iterator begin() const {return iterator(collection);}
+
+    /**
     *   \brief Supprime les éléments en réinitialisant la collection du vecteur.
     */
     void clear() {supprimerCollection();}
+
+    /**
+    *   \brief Crée un itérateur pointant le dernier élément de la collection.
+    *   \return un itérateur pointant le dernier élément
+    */
+    iterator end() const {return iterator(collection) + nbElements;}
 
     void erase(iterator position)
     {
@@ -219,8 +230,7 @@ public:
         }
         else if(nbElements == 1)
         {
-            delete [] collection;
-            nbElements--;
+            supprimerCollection();
         }
     }
 
@@ -270,18 +280,6 @@ public:
     *   \return nombre d'éléments contenus
     */
     unsigned int size() const {return nbElements;}
-
-    /**
-    *   \brief Crée un itérateur pointant le premier élément de la collection.
-    *   \return un itérateur pointant le premier élément
-    */
-    iterator begin() const {return iterator(collection);}
-
-    /**
-    *   \brief Crée un itérateur pointant le dernier élément de la collection.
-    *   \return un itérateur pointant le dernier élément
-    */
-    iterator end() const {return iterator(collection + nbElements);}
 
     /**
     *   \brief Donne accès à l'élément à la position spécifiée.

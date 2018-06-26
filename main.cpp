@@ -4,6 +4,7 @@
 //#include <vector>
 
 #include "vector.h"
+//#include "9 mai/vector.h"
 
 using namespace std;
 
@@ -57,7 +58,7 @@ int main()
     assert(VecteurDeInts.size() == 6);
     baliser(7);
 
-    /*
+    //*
     cout << "Essai de erase() avec deux iterateurs." << endl;
 
     VecteurDeInts.erase(VecteurDeInts.begin()+2, VecteurDeInts.end()-1);
@@ -109,14 +110,26 @@ int main()
 
     cout << "Compteur: " << compteur << endl;
 
-    //assert(compteur == 6);
+    assert(compteur == 6);
     baliser(12);
     //*/
+
+    // Vérifie que la chaîne à la position 3 a été changée.
+    for(int i(0); i<VecteurDeString.size(); i++)
+    {
+        cout << "" << VecteurDeString[i] << endl;
+    }
+
+    //*
+    cout << "Essai de erase() avec un iterateur." << endl;
+
+    VecteurDeString.erase(VecteurDeString.begin()+3);
 
     for(int i(0); i<VecteurDeString.size(); i++)
     {
         cout << "" << VecteurDeString[i] << endl;
     }
+    //*/
 
     cout << "Tests termines" << endl;
 
