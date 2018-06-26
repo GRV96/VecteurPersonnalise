@@ -2,7 +2,7 @@
 #define VECTOR_H_INCLUDED
 
 #include <cstdlib>
-#include <iterator>
+//#include <iterator>
 
 template <typename T>
 class vector
@@ -64,25 +64,23 @@ public:
 
     class iterator
     {
+
+    friend class vector;
+
     private:
 
         // Pointeur de pointeurs contenant la collection du vecteur
         T** pointeur;
 
         // Indice pour parcourir la collection
-        unsigned int indice = 0;
+        unsigned int indice;
 
     public:
 
         /**
         *   \brief Constructeur
-        *   \param ptr
-        *       Pointeur de pointeurs qui sert de collection
         */
-        iterator(T** ptr)
-        {
-            pointeur = ptr;
-        }
+        iterator() {indice = 0;}
 
         /**
         *   \brief Destructeur
@@ -92,17 +90,10 @@ public:
             pointeur = 0;
         }
 
-        /**
-        *   \brief
-        *       Accède à l'indice du pointeur actuel.
-        *   \return
-        *       L'indice actuel
-        */
-        unsigned int position() const {return indice;}
-
         iterator operator+(int p) const
         {
-            iterator i(pointeur);
+            iterator i;
+            i.pointeur = pointeur;
             i.indice = indice + p;
             return i;
         }
@@ -111,7 +102,8 @@ public:
 
         iterator operator-(int m) const
         {
-            iterator i(pointeur);
+            iterator i;
+            i.pointeur = pointeur;
             i.indice = indice - m;
             return i;
         }
@@ -150,7 +142,8 @@ public:
     }
 
     /**
-    *   \brief Renvoie l'élément à la position donnée.
+    *   \brief
+    *       Renvoie l'élément à la position donnée.
     *   \param i
     *       Position de l'élément demandé
     *   \return
@@ -159,21 +152,45 @@ public:
     T at(unsigned int i) const {return *collection[i];}
 
     /**
-    *   \brief Crée un itérateur pointant le premier élément de la collection.
-    *   \return un itérateur pointant le premier élément
+    *   \brief
+    *       Crée un itérateur pointant le premier élément de la collection.
+    *   \return
+    *       Un itérateur pointant le premier élément
     */
-    iterator begin() const {return iterator(collection);}
+    iterator begin() const
+    {
+        iterator i;
+        i.pointeur = collection;
+        return i;
+    }
 
     /**
-    *   \brief Supprime les éléments en réinitialisant la collection du vecteur.
+    *   \brief
+    *       Supprime les éléments en réinitialisant la collection du vecteur.
     */
     void clear() {supprimerCollection();}
 
     /**
-    *   \brief Crée un itérateur pointant le dernier élément de la collection.
-    *   \return un itérateur pointant le dernier élément
+    *    \brief
+    *       Indique si le vecteur est vide.
+    *    \return
+    *       Vrai si aucun élément n'est contenu
     */
-    iterator end() const {return iterator(collection) + nbElements;}
+    bool empty() const {return nbElements == 0;}
+
+    /**
+    *   \brief
+    *       Crée un itérateur pointant le dernier élément de la collection.
+    *   \return
+    *       Un itérateur pointant le dernier élément
+    */
+    iterator end() const
+    {
+        iterator i;
+        i.pointeur = collection;
+        i.indice = nbElements;
+        return i;
+    }
 
     void erase(iterator position)
     {
@@ -187,7 +204,7 @@ public:
 
         for(premier; premier<dernier; ++premier)
         {
-            position = premier.position();
+            position = premier.indice;
             delete collection[position];
             collection[position] = 0;
             suppressions++;
@@ -195,14 +212,6 @@ public:
 
         eliminerCasesVides(suppressions);
     }
-
-    /**
-    *    \brief
-    *       Indique si le vecteur est vide.
-    *    \return
-    *       Vrai si aucun élément n'est contenu
-    */
-    bool empty() const {return nbElements == 0;}
 
     /**
     *   \brief
