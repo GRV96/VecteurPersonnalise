@@ -94,6 +94,7 @@ int main()
     int compteur = 0;
 
     for(vector<string>::iterator it = VecteurDeString.begin(); it != VecteurDeString.end(); ++it)
+    //for(vector<string>::iterator it; it != VecteurDeString.end(); ++it)
     {
         string chaine = *it;
 
@@ -129,6 +130,22 @@ int main()
         cout << "" << VecteurDeString[i] << endl;
     }
     //*/
+
+    cout << "Essai du constructeur par copie" << endl;
+    vector<string> VecteurDeString2(VecteurDeString);
+    VecteurDeString2.at(2) = "Remplacement";
+
+    cout << "Nouveau vecteur de chaines de caracteres modifie" << endl;
+    for(int i(0); i<VecteurDeString2.size(); i++)
+    {
+        cout << "" << VecteurDeString2[i] << endl;
+    }
+
+    cout << "Vecteur de chaines original" << endl;
+    for(int i(0); i<VecteurDeString.size(); i++)
+    {
+        cout << "" << VecteurDeString[i] << endl;
+    }
 
     cout << "Tests termines" << endl;
 

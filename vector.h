@@ -120,12 +120,11 @@ public:
         bool operator>(iterator i) const {return indice > i.indice;}
         bool operator>=(iterator i) const {return (*this)>i || (*this)==i;}
 
-        // Sans l'esperluette (&), il est impossible de modifier l'élément dans la collection.
         T& operator*() const {return *pointeur[indice];}
     };
 
     /**
-    *   \brief Constructeur
+    *   \brief Constructeur par défaut
     */
     vector<T>()
     {
@@ -136,10 +135,16 @@ public:
     /**
     *   \brief Constructeur par copie
     */
-    vector<T>(const vector<T> &v)
+    vector<T>(const vector<T>& v)
     {
-        for (int i = 0; i < v.size(); i++)
-            push_back(v[i]);
+        nbElements = v.nbElements;
+        collection = new T*[nbElements];
+
+        for(unsigned int i(0); i<nbElements; i++)
+        {
+            collection[i] = new T;
+            *collection[i] = *v.collection[i];
+        }
     }
 
     /**
