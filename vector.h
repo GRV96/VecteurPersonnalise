@@ -158,7 +158,7 @@ public:
     *   \return
     *       Élément à la position i
     */
-    T at(unsigned int i) const {return *collection[i];}
+    T& at(unsigned int i) const {return *collection[i];}
 
     /**
     *   \brief
@@ -305,7 +305,7 @@ public:
     *       Position de l'élément voulu
     *   \return élément à la position i
     */
-    T operator[](unsigned int i)
+    T& operator[](unsigned int i)
     {
         return *collection[i];
     }
