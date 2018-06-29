@@ -134,6 +134,15 @@ public:
     }
 
     /**
+    *   \brief Constructeur par copie
+    */
+    vector<T>(const vector<T> &v)
+    {
+        for (int i = 0; i < v.size(); i++)
+            push_back(v[i]);
+    }
+
+    /**
     *   \brief Destructeur
     */
     ~vector<T>()
