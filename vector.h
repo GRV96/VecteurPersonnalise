@@ -40,9 +40,7 @@ private:
 
         nbElements -= vides;
         delete[] collection;
-        collection = new T*[nbElements];
-        copierTableau(temporaire, collection, nbElements);
-        delete[] temporaire;
+        collection = temporaire;
     }
 
     /**
