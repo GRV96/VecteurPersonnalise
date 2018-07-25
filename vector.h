@@ -2,7 +2,6 @@
 #define VECTOR_H_INCLUDED
 
 #include <cstdlib>
-//#include <iterator>
 
 template <typename T>
 class vector
@@ -128,7 +127,6 @@ public:
     */
     vector<T>()
     {
-        collection = new T*[1];
         nbElements = 0;
     }
 
